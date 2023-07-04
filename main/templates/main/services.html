@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Схема</title>
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css'%}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 2px solid silver;
+    padding: 8px;
+    text-align: left;
+  }
+</style>
+<div class="mainGradient">
+
+    <header>
+        Услуги
+    </header>
+
+    <div class="mapp">
+        <table>
+  <thead>
+    <tr>
+      <th>№</th>
+      <th>Наименование платной медицинской услуги</th>
+      <th>Описание процедуры</th>
+      <th>Ед измерения</th>
+      <th>Стоимость услуги в рублях</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for услуга in услуги %}
+      <tr>
+        <td>{{ forloop.counter|default:"" }}</td>
+        <td>{{ услуга.название|default:"" }}</td>
+        <td>{{ услуга.описание|default:"" }}</td>
+        <td>{{ услуга.едизмерения|default:"" }}</td>
+        <td>{{ услуга.цена|default:"" }}</td>
+      </tr>
+      <tr>
+        <td colspan="5" style="text-align: center;">{{ услуга.дополнительная_информация|default:"" }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    </div>
+
+
+    <div class="buttonsBack">
+        <a class="buttonBack" href="{% url 'home' %}">Главная</a>
+    </div>
+</div>
+<script>
+       if ('serviceWorker' in navigator) {
+           navigator.serviceWorker.register('{% url "sw.js" %}', { scope: '/' }).then(function(reg) {
+               // registration worked
+               console.log('Registration succeeded. Scope is ' + reg.scope);
+           }).catch(function(error) {
+               // registration failed
+               console.log('Registration failed with ' + error);
+           });
+       }
+
+</script>
+</body>
+</html>
